@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>موقع مع فيديو وموسيقى</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+        }
+
+        /* فيديو الخلفية */
+        .video-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+
+        /* شاشة البداية */
+        .start-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 30px;
+            z-index: 9999;
+            opacity: 1;
+            transition: opacity 1s ease;
+            flex-direction: column;
+        }
+
+        .start-screen.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        /* المحتوى */
+        .content {
+            position: relative;
+            z-index: 1;
+            color: white;
+            text-align: center;
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            display: none; /* إخفاء المحتوى بداية */
+        }
+
+        /* المربع العلوي */
+        .top-box {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            background-color: rgba(255, 255, 255, 0.4);
+            padding: 15px 25px;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            margin-bottom: 20px;
+        }
+
+        /* الصورة الدائرية */
+        .profile-image {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-right: 15px;
+        }
+
+        .profile-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* النصوص */
+        .top-box h1 {
+            font-size: 22px;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        /* أيقونة نيترو */
+        .nitro-icon {
+            width: 25px;
+            height: 25px;
+        }
+
+        .status {
+            margin-top: 5px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* المربع السفلي (الروابط) */
+        .links-box {
+            background-color: rgba(255, 255, 255, 0.3);
+            padding: 8px 15px;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            width: auto;
+            margin-top: 15px;
+        }
+
+        .links-box a {
+            color: white;
+            text-decoration: none;
+            margin: 5px 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+        }
+
+        .links-box a:hover {
+            text-decoration: underline;
+        }
+
+        .links-box a i {
+            font-size: 18px;
+        }
+
+        /* التحكم بالصوت */
+        .volume-control {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 10000;
+            background-color: rgba(255, 255, 255, 0.3);
+            padding: 5px 15px;
+            border-radius: 5px;
+            opacity: 1;
+            transition: opacity 0.3s ease;
+        }
+
+        .volume-control i {
+            font-size: 30px;
+            color: white;
+        }
+
+        .volume-slider {
+            display: none;
+            z-index: 10001;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        .volume-slider input {
+            width: 100%;
+            cursor: pointer;
+        }
+
+        /* أنميشن */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- فيديو الخلفية -->
+    <video class="video-background" autoplay muted loop>
+        <source src="mylivewallpapers-com-Sad-Itachi-FHD.mp4" type="video/mp4">
+        متصفحك لا يدعم تشغيل الفيديو.
+    </video>
+
+    <!-- شاشة البداية -->
+    <div class="start-screen" id="startScreen">
+        <h1>Click to Enter</h1>
+        <p>اضغط للبداية</p>
+    </div>
+
+    <!-- المحتوى -->
+    <div class="content" id="content">
+        <!-- إضافة كلمة "Welcome ALL!" في أعلى الصفحة -->
+        <div class="welcome-text">
+            Welcome ALL!
+        </div>
+
+        <!-- المربع العلوي -->
+        <div class="top-box">
+            <!-- الصورة الدائرية -->
+            <div class="profile-image">
+                <img src="circular_image.png" alt="صورة دائرية">
+            </div>
+            <!-- النصوص -->
+            <div>
+                <h1>
+                    RAOUF X CHAT 
+                    <img class="nitro-icon" src="nitro_icon.png" alt="Nitro Icon">
+                </h1>
+                <p class="status">last seen 13 hours ago</p>
+            </div>
+        </div>
+
+        <!-- المربع السفلي (الروابط) -->
+        <div class="links-box">
+            <a href="https://www.youtube.com/@RAOUFxCHAT" target="_blank"><i class="fab fa-youtube"></i> YouTube</a>
+            <a href="https://www.tiktok.com/@raouf_.x._chat" target="_blank"><i class="fab fa-tiktok"></i> TikTok</a>
+            <a href="https://www.instagram.com/raouf_.lb2/" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
+            <a href="https://discord.gg/6QFwrFjN" target="_blank"><i class="fab fa-discord"></i> Discord</a>
+        </div>
+    </div>
+
+    <!-- التحكم بالصوت -->
+    <div class="volume-control" id="volumeControl">
+        <i class="fas fa-volume-up" id="soundIcon"></i>
+        <div class="volume-slider" id="volumeSlider">
+            <input type="range" min="0" max="1" step="0.01" value="1" id="volumeRange">
+        </div>
+    </div>
+
+    <!-- ملف الصوت -->
+    <audio id="backgroundAudio" loop>
+        <source src="RAOUF_19.mp3" type="audio/mp3">
+        متصفحك لا يدعم تشغيل الصوت.
+    </audio>
+
+    <script>
+        const startScreen = document.getElementById('startScreen');
+        const content = document.getElementById('content');
+        const audio = document.getElementById('backgroundAudio');
+        const volumeControl = document.getElementById('volumeControl');
+        const soundIcon = document.getElementById('soundIcon');
+        const volumeSlider = document.getElementById('volumeSlider');
+        const volumeRange = document.getElementById('volumeRange');
+        
+        // عندما يتم النقر على شاشة البداية
+        startScreen.addEventListener('click', function() {
+            startScreen.classList.add('hidden');
+            content.style.display = 'flex'; // إظهار المحتوى
+            audio.play(); // تشغيل الصوت
+            volumeControl.style.opacity = '1'; // جعل شريط الصوت مرئيًا
+        });
+
+        // تغيير حجم الصوت عند التغيير في شريط الصوت
+        volumeRange.addEventListener('input', function() {
+            audio.volume = volumeRange.value;
+            if (audio.volume === 0) {
+                soundIcon.classList.remove('fa-volume-up');
+                soundIcon.classList.add('fa-volume-mute');
+            } else {
+                soundIcon.classList.remove('fa-volume-mute');
+                soundIcon.classList.add('fa-volume-up');
+            }
+        });
+
+        // تغيير الأيقونة عند النقر على أيقونة الصوت
+        soundIcon.addEventListener('click', function() {
+            if (audio.paused) {
+                audio.play();
+                soundIcon.classList.remove('fa-volume-mute');
+                soundIcon.classList.add('fa-volume-up');
+            } else {
+                audio.pause();
+                soundIcon.classList.remove('fa-volume-up');
+                soundIcon.classList.add('fa-volume-mute');
+            }
+        });
+
+        // إظهار شريط الصوت عند التمرير فوق الأيقونة
+        soundIcon.addEventListener('mouseover', function() {
+            volumeSlider.style.display = 'block';
+        });
+
+        soundIcon.addEventListener('mouseout', function() {
+            volumeSlider.style.display = 'none';
+        });
+
+        // إبقاء شريط الصوت مرئيًا عندما يكون الماوس فوقه
+        volumeControl.addEventListener('mouseover', function() {
+            volumeSlider.style.display = 'block';
+        });
+
+        volumeControl.addEventListener('mouseout', function() {
+            volumeSlider.style.display = 'none';
+        });
+    </script>
+</body>
+</html>
